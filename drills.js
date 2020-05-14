@@ -159,20 +159,20 @@ function swap(array, i, j) {
 // for non-negative                                                    
 function bucketSort(array, lowest, highest) { // [2, 5, 24, 15, 1, 7, 42, 30]
   // O(n) complexity
-  let n = Math.sqrt(array.length)
+  let n = Math.floor(Math.sqrt(array.length))
   let bucket = [];
   for(let i = 0, j=0; i < array.length; i++) { 
-    bucket[j].push(array[i]) // [undefined, udefined, 2, ...undefined, 42]
+    bucket.push([array[i]])
     if (i == n-1) {
       j++
     }
   }
   for(let k = 0; k < bucket.length; k++) { 
-    bucket[array[k]] = array[k]; 
+    bucket[k] = quickSort(bucket[k]); 
   }
 
 
-  return bucket.filter(e => e !== undefined);
+  return [...bucket];
 }
 
 // 7. Sort in place
@@ -209,12 +209,14 @@ function main() {
 
   //console.log(display(SLL));
   // console.log(mergeSort(display(SLL)));
-  //console.log(bucketSort([2, 24, 0, 1, 7, 42, 30], 1, 42));
+
+  console.log(bucketSort([2, 24, 0, 1, 7, 42, 30], 1, 42));
 
   //console.log(shuffleRandomly([2, 24, 0, 1, 7, 42, 30]))
 
   let books = ['apple', 'zebra', 'muffins', 'kangaroo']
-  console.log(sortBooks(books))
+  //console.log(sortBooks(books))
+
 }
 
 main();
