@@ -11,7 +11,7 @@ What are the first 2 lists to be merged?
 Which two lists would be merged on the 7th merge?
 
 */
-mergeSort([21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40]);
+//mergeSort([21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40]);
 function mergeSort(array) {   // 1, 21  26, 45  28, 29  2, 9      16, 49  27, 39 34, 43 40, 46
   if (array.length <= 1) {     
     return array;
@@ -83,3 +83,49 @@ function merge(left, right, array) {
 
 
 // 2. Understanding quicksort
+
+//(a.)
+//After the first partition step has been completed, 
+//the contents of the array is in the following order:
+// 3 9 1 14 17 24 22 20
+
+//----> The pivot could have been either 14 or 17 because
+//they're both larger that the first few numbers in the array.
+
+
+function quickSort(array, start = 0, end = array.length) {
+  if (start >= end) {
+      return array;
+  }
+  const middle = partition(array, start, end);
+  console.log('middle:', middle)
+  array = quickSort(array, start, middle);
+  console.log('array fist half', array)
+  array = quickSort(array, middle + 1, end);
+  console.log('array second half', array)
+  return array;
+};
+
+function partition(array, start, end) {
+  const pivot = array[end - 1];
+  console.log('pivot', pivot)
+  let j = start;
+  for (let i = start; i < end - 1; i++) {
+      if (array[i] <= pivot) {
+          swap(array, i, j);
+          j++;
+      }
+  }
+  swap(array, end-1, j);
+  return j;
+};
+
+function swap(array, i, j) {
+  const tmp = array[i];
+  array[i] = array[j];
+  array[j] = tmp;
+};
+
+//quickSort([3, 9, 1, 14, 17, 24, 22, 20])
+
+quickSort([14, 17, 13, 15, 19, 10, 3, 16, 9, 12]) 
