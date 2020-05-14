@@ -12,7 +12,32 @@ What is the resulting list that will be sorted after 16 recursive
 What are the first 2 lists to be merged?
 Which two lists would be merged on the 7th merge?
 
-*/
+
+
+
+*///BubbleSort
+
+function swap(array, i, j) {
+    const tmp = array[i];
+    array[i] = array[j];
+    array[j] = tmp;
+};
+
+function bubbleSort(array) {
+    let swaps = 0;
+    for (let i = 0; i < array.length - 1; i++) {
+        if (array[i] > array[i + 1]) {
+            swap(array, i, i + 1);
+            swaps++;
+        }
+    }
+
+    if (swaps > 0) {
+        return bubbleSort(array);
+    }
+    return array;
+};
+
 //mergeSort([21, 1, 26, 45, 29, 28, 2, 9, 16, 49, 39, 27, 43, 34, 46, 40]);
 function mergeSort(array) {   // 1, 21  26, 45  28, 29  2, 9      16, 49  27, 39 34, 43 40, 46
   if (array.length <= 1) {     
@@ -134,16 +159,39 @@ function swap(array, i, j) {
 // for non-negative                                                    
 function bucketSort(array, lowest, highest) { // [2, 5, 24, 15, 1, 7, 42, 30]
   // O(n) complexity
+  let n = Math.sqrt(array.length)
   let bucket = [];
-  for(let i = 0; i < highest; i++) { 
-    bucket[i] = undefined; // [undefined, udefined, 2, ...undefined, 42]
+  for(let i = 0, j=0; i < array.length; i++) { 
+    bucket[j].push(array[i]) // [undefined, udefined, 2, ...undefined, 42]
+    if (i == n-1) {
+      j++
+    }
   }
-  for(let j = 0; j < array.length; j++) { 
-    bucket[array[j]] = array[j]; 
+  for(let k = 0; k < bucket.length; k++) { 
+    bucket[array[k]] = array[k]; 
   }
 
 
   return bucket.filter(e => e !== undefined);
+}
+
+// 7. Sort in place
+
+function shuffleRandomly(array) {
+  for (let i = 0; i<array.length; i++) {
+    let randomIndex = Math.floor(Math.random() * array.length);
+    let temp = array[i]
+    array[i] = array[randomIndex]
+    array[randomIndex] = temp
+  }
+  return array;
+}
+
+
+// 8. Sorting Books
+
+function sortBooks(books) {
+  return bubbleSort(books)
 }
 
 function main() {
@@ -161,7 +209,12 @@ function main() {
 
   //console.log(display(SLL));
   // console.log(mergeSort(display(SLL)));
-  console.log(bucketSort([2, 24, 0, 1, 7, 42, 30], 1, 42));
+  //console.log(bucketSort([2, 24, 0, 1, 7, 42, 30], 1, 42));
+
+  //console.log(shuffleRandomly([2, 24, 0, 1, 7, 42, 30]))
+
+  let books = ['apple', 'zebra', 'muffins', 'kangaroo']
+  console.log(sortBooks(books))
 }
 
 main();
